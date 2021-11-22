@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>URL Shrinker</h1>
+    <form action="/shrink" method="POST">
+      <input
+        type="url"
+        name="fullUrl"
+        id="fullUrl"
+        placeholder="Enter URL to shrink"
+      />
+      <input type="submit" value="Shrink" />
+    </form>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Original URL</th>
+          <th>Short URL</th>
+          <th>Clicks</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% shortUrls.forEach(function(shortUrl) { %>
+        <tr>
+          <td>
+            <a href="<%= shortUrl.originalUrl %> "
+              ><%= shortUrl.originalUrl %>
+            </a>
+          </td>
+          <td>
+            <a href="<%= shortUrl.shortUrl %> "><%= shortUrl.shortUrl %> </a>
+          </td>
+          <td><%= shortUrl.clicks %></td>
+
+          <% }); %>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
