@@ -23,7 +23,7 @@ app.post("/shrink", async (req, res) => {
 app.get("/:shortUrl", async (req, res) => {
   const shortUrl = await ShortUrl.findOne({ shortUrl: req.params.shortUrl });
   if (shortUrl == null) {
-    res.send("No such url found");
+    return res.send("No such url found");
   }
   shortUrl.clicks++;
   shortUrl.save();
