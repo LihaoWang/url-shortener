@@ -4,71 +4,128 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
+    <!-- <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
-    />
+    /> -->
+    <link rel="stylesheet" href="/css/styles.css"> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+
     <title>Shortify.icu</title>
   </head>
   <body>
     <nav class="navbar" role="navigation" aria-label="main navigation">
-      <div id="navbarBasicExample" class="navbar-menu">
+      <div class="navbar-brand">
+
+          Shortify.icu
+        </div>
         <div class="navbar-end">
-          <div class="navbar-item">
-            <div class="buttons">
-              <% if (isAuthenticated) {%>
+          
+          <% if (isAuthenticated) {%>
+            <div class="navbar-item">
+              <i class="bi bi-person-circle" style="margin-right: 5px;"></i>
               <a class="mr-3">
-                <strong> <%= user.name %> </strong>
+               <%= user.name %> 
               </a>
+            </div>
+            <div class="navbar-item">
               <a class="button is-primary" href="/logout">
-                <strong>Logout</strong>
+                Logout
               </a>
+              </div>  
               <% } else { %>
+                <div class="navbar-item">
               <a class="button is-primary" href="/login">
-                <strong>Login</strong>
+                Login
               </a>
+              </div>
 
               <% } %>
-            </div>
-          </div>
+ 
         </div>
       </div>
     </nav>
-    <div class="container">
-      <h1 class="title is-1 mt-3">URL Shrinker</h1>
-      <form action="/shrink" method="POST">
+    <div class="main">
+      <div>
+        <h2 class="">Shortify.icu</h2>
+        <h1 class="">Get short links <br/> Effortlessly</h1>
+      </div>
+      <form  class="flex-col"action="/shrink" method="POST">
         <input
-          class="input is-large"
+          class="input"
           type="url"
           name="fullUrl"
           id="fullUrl"
           placeholder="Enter URL to shrink"
         />
-        <input class="mt-3 button is-info" type="submit" value="Shrink" />
+        <input class="submit-btn" type="submit" value="Shrink" />
       </form>
-      <div class="mt-5">
-        <div class="columns">
-          <div class="column is-one-quarter">Original URL</div>
-          <div class="column is-one-quarter">Short URL</div>
-          <div class="column is-one-quarter">Clicks</div>
-          <div class="column is-one-quarter">Action</div>
+
+      <div class="features-wrapper">
+        <div class="flex-col">
+      <div class="features">
+        <div class="feature">
+          <i class="bi bi-cash-coin"></i>
+          <h3>Free to start</h3>
+
+
+        </div>
+        <div class="feature">
+          <i class="bi bi-lightning"></i>
+          <h3>Performance</h3>
+
+        </div>
+        <div class="feature">
+          <i class="bi bi-github"></i>
+          <h3>Open source</h3>
+
+        </div>
+      </div>
+      <div class="features">
+
+        <div class="feature">
+          <p>Get started for free. Upgrade to premium if you need more features</p>
+        </div>
+        <div class="feature">
+          <p>
+            Running on high performance Digital Ocean droplets and super fast MongoDB database</p>
+        </div>
+        <div class="feature">
+          <p>
+            Maintained with ❤ by Leo Wang <br/>
+            Fully open source and available on Github</p>
+          </p>
+        </div>
+      </div>
+      </div>
+    </div>
+      <div class="table">
+        <div class="table-title">
+          <div class="table-item">Original URL</div>
+          <div class="table-item">Short URL</div>
+          <div class="table-item">Clicks</div>
+          <div class="table-item">Action</div>
         </div>
 
         <% shortUrls.forEach(function(shortUrl) { %>
-        <div class="columns">
-          <div class="column is-one-quarter" style="overflow-wrap: anywhere;">
+        <div class="table-row">
+          <div class="table-item" style="overflow-wrap: anywhere;">
             <a href="<%= shortUrl.originalUrl %> "
               ><%= shortUrl.originalUrl %>
             </a>
           </div>
-          <div class="column is-one-quarter">
+          <div class="table-item">
             <a href="<%= shortUrl.shortUrl %> "><%= shortUrl.shortUrl %> </a>
           </div>
-          <div class="column is-one-quarter"><%= shortUrl.clicks %></div>
+          <div class="table-item"><%= shortUrl.clicks %></div>
+          <div class="table-item">
+            
           <a class="button" href="/delete/<%= shortUrl.shortUrl  %> ">delete</a>
+          </div>
         </div>
           <% }); %>
         </div>
+
       </div>
     </div>
   </body>

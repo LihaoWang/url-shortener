@@ -21,6 +21,7 @@ const config = {
 };
 app.use(auth(config));
 app.set("view engine", "ejs");
+app.use(express.static("public"));
 app.use(express.urlencoded({ extended: false }));
 app.get("/", async (req, res) => {
   const shortUrls = await ShortUrl.find();
