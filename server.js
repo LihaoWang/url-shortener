@@ -72,7 +72,7 @@ app.get("/delete/:shortUrl", async (req, res) => {
 app.get("/:shortUrl", async (req, res) => {
   const shortUrl = await ShortUrl.findOne({ shortUrl: req.params.shortUrl });
   if (shortUrl == null) {
-    return res.send("No such url found");
+    return res.status(404).send("No such url found");
   }
   shortUrl.clicks++;
   shortUrl.save();
@@ -82,3 +82,5 @@ app.get("/:shortUrl", async (req, res) => {
 app.listen(process.env.PORT || 5000, () => {
   console.log("Server started");
 });
+
+module.exports = app;
