@@ -4,10 +4,19 @@ const mongoose = require("mongoose");
 const ShortUrl = require("./models/shortUrl");
 const app = express();
 
-mongoose.connect("mongodb://localhost/urlShortener", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+const url = process.env.DB_URL;
+
+mongoose
+  .connect(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("Connected to database ");
+  })
+  .catch((err) => {
+    console.error(`Error connecting to the database. \n${err}`);
+  });
 
 const { auth } = require("express-openid-connect");
 const { requiresAuth } = require("express-openid-connect");
@@ -32,13 +41,27 @@ app.get("/", async (req, res) => {
   });
 });
 
-app.get("/profile", requiresAuth(), (req, res) => {
-  res.send(JSON.stringify(req.oidc.user));
+app.get("/profile", requiresAuth(), async (req, res) => {
+  data = await ShortUrl.find({ email: req.oidc.user.email });
+  console.log(data);
+  res.render("profile", { data: data });
 });
 
 app.post("/shrink", async (req, res) => {
-  await ShortUrl.create({ originalUrl: req.body.fullUrl });
-  res.redirect("/");
+  if (req.oidc.isAuthenticated()) {
+    try {
+      await ShortUrl.create({
+        originalUrl: req.body.fullUrl,
+        email: req.oidc.user.email,
+      });
+      res.redirect("/");
+    } catch (err) {
+      console.error(err);
+      res.redirect("/");
+    }
+  } else {
+    res.redirect("/login");
+  }
 });
 
 app.get("/delete/:shortUrl", async (req, res) => {
