@@ -9,10 +9,10 @@ on:
   pull_request:
     branches: [master]
 
-env: DB_URL =${{ secrets.DB_URL }}
-  CLIENT_ID =${{ secrets.CLIENT_ID }}
-  SECRET =${{ secrets.SECRET }}
-  BASE_URL =${{ secrets.BASE_URL }}
+env: DB_URL: ${{ secrets.DB_URL }}
+  CLIENT_ID: ${{ secrets.CLIENT_ID }}
+  SECRET: ${{ secrets.SECRET }}
+  BASE_URL: ${{ secrets.BASE_URL }}
 
 jobs:
   build:
