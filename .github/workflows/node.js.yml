@@ -9,13 +9,18 @@ on:
   pull_request:
     branches: [master]
 
+env: DB_URL =${{ secrets.DB_URL }}
+  CLIENT_ID =${{ secrets.CLIENT_ID }}
+  SECRET =${{ secrets.SECRET }}
+  BASE_URL =${{ secrets.BASE_URL }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 16.x]
+        node-version: [14.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
